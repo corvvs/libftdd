@@ -8,7 +8,7 @@ OUT_DIR_LIBC	:=	out_c
 OUT_DIR_LIBFT	:=	out_ft
 DIRS			:=	execs_c execs_ft out_c out_ft
 
-FUNCS_PART1		:=	memset memcmp memcpy\
+FUNCS_PART1		:=	memset memcmp memcpy memchr\
 					strlen \
 					isalpha isdigit isalnum isprint isascii \
 					atoi
