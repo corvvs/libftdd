@@ -8,4 +8,5 @@ int main()
 		printf("%d", dd_isdigit(i));
 	}
 	printf("\n");
+	return (0);
 }

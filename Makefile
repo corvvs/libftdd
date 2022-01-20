@@ -12,28 +12,30 @@ FUNCS_PART1		:=	memset memcmp\
 					strlen \
 					isalpha isdigit isalnum isprint isascii
 
-libft		:
+libft			:
 	$(MAKE) -C $(LIBFT_DIR)
 
 
-$(LIBFT_A)	:	libft
+$(LIBFT_A)		:	libft
 	cp $(LIBFT_DIR)/$(LIBFT_A) .
 
 
-$(DIRS)	:
+$(DIRS)			:
 	mkdir -p $@
 
-$(FUNCS_PART1)		: $(LIBFT_A) $(EXEC_DIR_LIBC) $(EXEC_DIR_LIBFT) $(OUT_DIR_LIBC) $(OUT_DIR_LIBFT)
+$(FUNCS_PART1)	: $(LIBFT_A) $(EXEC_DIR_LIBC) $(EXEC_DIR_LIBFT) $(OUT_DIR_LIBC) $(OUT_DIR_LIBFT)
 	@echo [building $@]
 	$(CC) -o $(EXEC_DIR_LIBC)/$@ $(LIBFT_A) $(MAIN_DIR)/$@.c
 	$(CC) -D USE_LIBFT=1 -o $(EXEC_DIR_LIBFT)/$@ $(LIBFT_A) $(MAIN_DIR)/$@.c
 	@echo [testing $@]
 	$(EXEC_DIR_LIBC)/$@ 1> $(OUT_DIR_LIBC)/$@.out 2> $(OUT_DIR_LIBC)/$@.err
+	echo "[exit status: $${?}]" >> $(OUT_DIR_LIBC)/$@.out
 	$(EXEC_DIR_LIBFT)/$@ 1> $(OUT_DIR_LIBFT)/$@.out 2> $(OUT_DIR_LIBFT)/$@.err
+	echo "[exit status: $${?}]" >> $(OUT_DIR_LIBFT)/$@.out
 	diff -u $(OUT_DIR_LIBC)/$@.out $(OUT_DIR_LIBFT)/$@.out
 	@echo [$@: ok]
 
-clean	:
+clean			:
 	$(MAKE) -C $(LIBFT_DIR) clean
 
-run		: $(FUNCS_PART1)
+run				: $(FUNCS_PART1)

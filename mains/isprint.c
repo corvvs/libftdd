@@ -8,4 +8,5 @@ int main()
 		printf("%d", dd_isprint(i));
 	}
 	printf("\n");
+	return (0);
 }
