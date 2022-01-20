@@ -14,6 +14,8 @@ FUNCS_PART1		:=	memset memcmp memcpy memmove memchr \
 					toupper tolower \
 					atoi
 
+FUNCS_PART2		:=	strjoin \
+
 $(LIBFT_DIR)/$(LIBFT_A):
 	$(MAKE) -C $(LIBFT_DIR)
 
@@ -30,7 +32,7 @@ $(FUNCS_PART1)	: $(LIBFT_A) $(EXEC_DIR_LIBC) $(EXEC_DIR_LIBFT) $(OUT_DIR_LIBC) $
 	rm -f $(EXEC_DIR_LIBC)/$@ $(EXEC_DIR_LIBFT)/$@
 	rm -f $(OUT_DIR_LIBC)/$@.out $(OUT_DIR_LIBC)/$@.err $(OUT_DIR_LIBFT)/$@.out $(OUT_DIR_LIBFT)/$@.err
 	$(CC) -o $(EXEC_DIR_LIBC)/$@ $(LIBFT_A) $(MAIN_DIR)/$@.c
-	$(CC) -D USE_LIBFT=1 -o $(EXEC_DIR_LIBFT)/$@ $(LIBFT_A) $(MAIN_DIR)/$@.c
+	$(CC) -g -fsanitize=address -D USE_LIBFT=1 -o $(EXEC_DIR_LIBFT)/$@ $(LIBFT_A) $(MAIN_DIR)/$@.c
 	@echo [testing $@]
 	$(EXEC_DIR_LIBC)/$@ 1> $(OUT_DIR_LIBC)/$@.out 2> $(OUT_DIR_LIBC)/$@.err
 	@echo "[exit status: $${?}]" >> $(OUT_DIR_LIBC)/$@.out
@@ -38,6 +40,16 @@ $(FUNCS_PART1)	: $(LIBFT_A) $(EXEC_DIR_LIBC) $(EXEC_DIR_LIBFT) $(OUT_DIR_LIBC) $
 	@echo "[exit status: $${?}]" >> $(OUT_DIR_LIBFT)/$@.out
 	diff -u $(OUT_DIR_LIBC)/$@.out $(OUT_DIR_LIBFT)/$@.out
 	@echo [$@: ok]
+
+$(FUNCS_PART2)	: $(LIBFT_A) $(EXEC_DIR_LIBFT) $(OUT_DIR_LIBFT)
+	@echo [building $@]
+	rm -f $(EXEC_DIR_LIBFT)/$@
+	rm -f $(OUT_DIR_LIBFT)/$@.out $(OUT_DIR_LIBFT)/$@.err
+	$(CC) -g -fsanitize=address -D USE_LIBFT=1 -o $(EXEC_DIR_LIBFT)/$@ $(LIBFT_A) $(MAIN_DIR)/$@.c
+	@echo [testing $@]
+	$(EXEC_DIR_LIBFT)/$@ 1> $(OUT_DIR_LIBFT)/$@.out 2> $(OUT_DIR_LIBFT)/$@.err
+	@echo "[exit status: $${?}]" >> $(OUT_DIR_LIBFT)/$@.out
+	@! grep KO $(OUT_DIR_LIBFT)/$@.out -w --col
 
 clean			:
 	$(MAKE) -C $(LIBFT_DIR) clean
@@ -47,6 +59,6 @@ fclean			:
 	$(RM) $(LIBFT_A)
 
 wipe			:
-	rm -f $(EXEC_DIR_LIBC)/* $(EXEC_DIR_LIBFT)/* $(OUT_DIR_LIBC)/* $(OUT_DIR_LIBFT)/*
+	rm -rf $(EXEC_DIR_LIBC) $(EXEC_DIR_LIBFT) $(OUT_DIR_LIBC) $(OUT_DIR_LIBFT)
 
 run				: wipe $(FUNCS_PART1)

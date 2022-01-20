@@ -22,6 +22,8 @@
 # define dd_toupper ft_toupper
 # define dd_tolower ft_tolower
 # define dd_atoi ft_atoi
+
+# define dd_strjoin ft_strjoin
 #else
 # define dd_memset memset
 # define dd_memcmp memcmp
@@ -40,4 +42,6 @@
 # define dd_toupper toupper
 # define dd_tolower tolower
 # define dd_atoi atoi
+
+# define dd_strjoin ft_strjoin
 #endif
