@@ -1,5 +1,14 @@
 #include "h.h"
 
+void	work(char *mem, int c, size_t m)
+{
+	char	*rv = dd_memchr(mem, c, m);
+	if (rv == 0)
+		printf("not found\n");
+	else
+		printf("ptr_diff: %zu\n", rv - mem);
+}
+
 int main()
 {
 	setvbuf(stdout, NULL, _IONBF, 0);
@@ -11,19 +20,14 @@ int main()
 	const size_t	m = n / 10000;
 	while (i < m)
 	{
-		mem[i] = i % 255 + 1;
+		mem[i] = i % 255;
 		i += 1;
 	}
-	mem[i] = '\0';
 	int c = -1000;
 	while (c <= 1000)
 	{
-		printf("[case %d]\n", c);
-		rv = dd_memchr(mem, c, m);
-		if (rv == 0)
-			printf("not found\n");
-		else
-			printf("ptr_diff: %zu\n", rv - mem);
+		printf("[case %d('%c')]\n", c, c);
+		work(mem, c, m);
 		c += 1;
 	}
 
@@ -32,19 +36,10 @@ int main()
 	mem[n] = '\0';
 
 	printf("[special case 1: very long found]\n");
-	rv = dd_memchr(mem, 'y', n);
-	if (rv == 0)
-		printf("not found\n");
-	else
-		printf("ptr_diff: %zu\n", rv - mem);
+	work(mem, 'y', n);
 
 	printf("[special case 2: very long not found]\n");
-	rv = dd_memchr(mem, 'z', n);
-	if (rv == 0)
-		printf("not found\n");
-	else
-		printf("ptr_diff: %zu\n", rv - mem);
-
+	work(mem, 'z', n);
 
 	return (0);
 }

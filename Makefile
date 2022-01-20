@@ -8,7 +8,7 @@ OUT_DIR_LIBC	:=	out_c
 OUT_DIR_LIBFT	:=	out_ft
 DIRS			:=	execs_c execs_ft out_c out_ft
 
-FUNCS_PART1		:=	memset memcmp memcpy memchr \
+FUNCS_PART1		:=	memset memcmp memcpy memmove memchr \
 					strlen strchr strrchr \
 					isalpha isdigit isalnum isprint isascii \
 					toupper tolower \
@@ -27,6 +27,8 @@ $(DIRS)			:
 
 $(FUNCS_PART1)	: $(LIBFT_A) $(EXEC_DIR_LIBC) $(EXEC_DIR_LIBFT) $(OUT_DIR_LIBC) $(OUT_DIR_LIBFT)
 	@echo [building $@]
+	rm -f $(EXEC_DIR_LIBC)/$@ $(EXEC_DIR_LIBFT)/$@
+	rm -f $(OUT_DIR_LIBC)/$@.out $(OUT_DIR_LIBC)/$@.err $(OUT_DIR_LIBFT)/$@.out $(OUT_DIR_LIBFT)/$@.err
 	$(CC) -o $(EXEC_DIR_LIBC)/$@ $(LIBFT_A) $(MAIN_DIR)/$@.c
 	$(CC) -D USE_LIBFT=1 -o $(EXEC_DIR_LIBFT)/$@ $(LIBFT_A) $(MAIN_DIR)/$@.c
 	@echo [testing $@]
@@ -44,4 +46,7 @@ fclean			:
 	$(MAKE) -C $(LIBFT_DIR) fclean
 	$(RM) $(LIBFT_A)
 
-run				: $(FUNCS_PART1)
+wipe			:
+	rm -f $(EXEC_DIR_LIBC)/* $(EXEC_DIR_LIBFT)/* $(OUT_DIR_LIBC)/* $(OUT_DIR_LIBFT)/*
+
+run				: wipe $(FUNCS_PART1)

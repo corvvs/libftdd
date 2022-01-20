@@ -13,51 +13,51 @@ int main()
 	printf("buf1: %s\n", buf1);
 	printf("buf2: %s\n", buf2);
 
-	printf("[case 1: memcpy(buf1, buf2, 0))]\n");
-	dd_memcpy(buf1, buf2, 0);
+	printf("[case 1: memmove(buf1, buf2, 0))]\n");
+	dd_memmove(buf1, buf2, 0);
 	printf("buf1: %s\n", buf1);
 	printf("buf2: %s\n", buf2);
 
-	printf("[case 2: memcpy(buf1, buf2, 10))]\n");
-	dd_memcpy(buf1, buf2, 10);
+	printf("[case 2: memmove(buf1, buf2, 10))]\n");
+	dd_memmove(buf1, buf2, 10);
 	printf("buf1: %s\n", buf1);
 	printf("buf2: %s\n", buf2);
 
-	printf("[case 3: memcpy(buf1, buf2, strlen(buf2)))]\n");
-	dd_memcpy(buf1, buf2, strlen(buf2));
+	printf("[case 3: memmove(buf1, buf2, strlen(buf2)))]\n");
+	dd_memmove(buf1, buf2, strlen(buf2));
 	printf("buf1: %s\n", buf1);
 	printf("buf2: %s\n", buf2);
 
 	printf("[case 4: koganei-koganei]\n");
-	dd_memcpy(buf1, buf1 + 8, 7);
+	dd_memmove(buf1, buf1 + 8, 7);
 	printf("buf1: %s\n", buf1);
 	printf("buf2: %s\n", buf2);
 
-	printf("[case 5: memcpy(buf2, buf2, SIZE_MAX)]\n");
-	dd_memcpy(buf2, buf2, SIZE_MAX);
+	printf("[case 5: memmove(buf2, buf2, SIZE_MAX)]\n");
+	dd_memmove(buf2, buf2, SIZE_MAX);
 	printf("buf1: %s\n", buf1);
 	printf("buf2: %s\n", buf2);
 
-	printf("[case 6: memcpy(buf1, buf2, 0)]\n");
-	dd_memcpy(buf2, buf2, 0);
+	printf("[case 6: memmove(buf1, buf2, 0)]\n");
+	dd_memmove(buf2, buf2, 0);
 	printf("buf1: %s\n", buf1);
 	printf("buf2: %s\n", buf2);
 
-	printf("[case 7: left to right]\n");
-	memcpy(buf1, buf2, strlen(buf2) + 1);
-	dd_memcpy(buf1 + 5, buf1, 3);
+	printf("[case 7: overwrapping - left to right]\n");
+	memmove(buf1, buf2, strlen(buf2) + 1);
+	dd_memmove(buf1 + 5, buf1, 10);
 	printf("buf1: %s\n", buf1);
 	printf("buf2: %s\n", buf2);
 
-	printf("[case 8: right to left]\n");
-	memcpy(buf1, buf2, strlen(buf2) + 1);
-	dd_memcpy(buf1, buf1 + 5, 3);
+	printf("[case 8: overwrapping - right to left]\n");
+	memmove(buf1, buf2, strlen(buf2) + 1);
+	dd_memmove(buf1, buf1 + 5, 10);
 	printf("buf1: %s\n", buf1);
 	printf("buf2: %s\n", buf2);
 
 	buf2[n - 10] = 'X';
 	printf("[case 9: very long]\n");
-	dd_memcpy(buf1, buf2, n);
+	dd_memmove(buf1, buf2, n);
 	printf("buf1[%zu]: '%c'\n", n - 10, buf1[n - 10]);
 	printf("buf2[%zu]: '%c'\n", n - 10, buf2[n - 10]);
 	return (0);
