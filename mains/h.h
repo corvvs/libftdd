@@ -6,6 +6,7 @@
 #ifdef USE_LIBFT
 # define dd_memset ft_memset
 # define dd_memcmp ft_memcmp
+# define dd_memcpy ft_memcpy
 # define dd_strlen ft_strlen
 # define dd_isalpha ft_isalpha
 # define dd_isdigit ft_isdigit
@@ -15,6 +16,7 @@
 #else
 # define dd_memset memset
 # define dd_memcmp memcmp
+# define dd_memcpy memcpy
 # define dd_strlen strlen
 # define dd_isalpha isalpha
 # define dd_isdigit isdigit
