@@ -1,4 +1,4 @@
-
+CC				:=	gcc
 LIBFT_DIR		:=	libft
 LIBFT_A			:=	libft.a
 EXEC_DIR_LIBC	:=	execs_c
@@ -10,7 +10,8 @@ DIRS			:=	execs_c execs_ft out_c out_ft
 
 FUNCS_PART1		:=	memset memcmp memcpy\
 					strlen \
-					isalpha isdigit isalnum isprint isascii
+					isalpha isdigit isalnum isprint isascii \
+					atoi
 
 $(LIBFT_DIR)/$(LIBFT_A):
 	$(MAKE) -C $(LIBFT_DIR)

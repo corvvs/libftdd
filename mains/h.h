@@ -13,6 +13,7 @@
 # define dd_isalnum ft_isalnum
 # define dd_isascii ft_isascii
 # define dd_isprint ft_isprint
+# define dd_atoi ft_atoi
 #else
 # define dd_memset memset
 # define dd_memcmp memcmp
@@ -23,5 +24,5 @@
 # define dd_isalnum isalnum
 # define dd_isascii isascii
 # define dd_isprint isprint
+# define dd_atoi atoi
 #endif
-
